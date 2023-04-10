@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MentOS - Delete Account</title>
+</head>
+<body>
+    {% extends 'index.html'%}
+
+    {% block title %} {%trans "Delete Account" %} {% endblock %}
+    
+    {block card-header %}
+        <h3>{% trans "Delete account"%}</h3>
+    {% endblock %}
+    
+
+    {% block card-body %}
+        <form method="POST">
+            {%csrf_token %}
+            <p>{% trans "Are you sure you want to delete the account"%} {{object.enail }}?</p>
+            <button type="Submit" class="btn btn-danger">{% trans "Delete" %</button>
+        </form>
+        <br><p>{% trans "No, keep my account" %}</p>
+        <a href="/" class="btn btn-outline-primary">{% trans "Return to site" %}</a>
+    {% endblock %}
+</body>
+</html>

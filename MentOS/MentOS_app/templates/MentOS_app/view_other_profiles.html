@@ -1,0 +1,127 @@
+{% extends "MentOS_app/base.html" %}
+
+{% block style %}
+<style>
+    .content {
+        margin-left: 1.5vw;
+        margin-right: 1.5vw;
+        padding: 20px;
+        text-align: left;
+        background-color: #333;
+        border-radius: 10px;
+    }
+    .content::after {
+        clear: both;
+        display: table;
+        content: "";
+    }
+    img {
+        border-radius: 50%;
+        width: 100px;
+    }
+    .column {
+        float: left;
+    }
+    .left {
+        width: 60%;
+    }
+    .right {
+        width: 40%;
+    }
+
+    .column.right button {
+        width: 80%;
+    }
+
+</style>
+{% endblock style %}
+
+{% block content %}
+    <h1>View Other Profiles</h1> 
+    
+    {% if request.user.username not in other_user_profile.blocked_users %}   
+        <div class="content">
+            <div class="column left">
+                <h3>{{ other_user_profile.user.first_name }} {{ other_user_profile.user.last_name }}</h3>
+                <img src="{{ other_user_profile.profile_img.url }}" alt="User Picture"><br><br>
+                {% if other_user_profile.status == True %}
+                    <p>Status: Active</p>
+                {% else %}
+                    <p>Status: Inactive</p>
+                {% endif %}
+                <p>Interest: {{ other_user_profile.interest }}</p>
+                <p>Bio: {{ other_user_profile.bio }}</p>
+                {% if rating_score != 0 %}
+                    <p>Rating: {{ rating_score }} / 5.0</p>
+                {% else %}
+                    <p>Rating: No Rating Yet</p>
+                {% endif %}
+            </div>
+
+            <div class="column right">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if other_user_profile.user.username in request.user.profile.current_connections and request.user.username in other_user_profile.current_connections %}
+                        <button name="connect_user">Disconnect</button>
+                    {% elif other_user_profile.user.username not in request.user.profile.current_connections and request.user.username not in other_user_profile.current_connections and other_user_profile.user.username in request.user.profile.pending_connections %}
+                        <button name="connect_user" value=1>Accept Connection Request</button><br><br>
+                        <button name="connect_user" value=0>Decline Connection Request</button>
+                    {% elif other_user_profile.user.username not in request.user.profile.current_connections and request.user.username not in other_user_profile.current_connections and request.user.username in other_user_profile.pending_connections%}
+                        <button name="connect_user">Cancel Connection Request</button>
+                    {% elif other_user_profile.status == True %}
+                        <button name="connect_user">Connect</button>
+                    {% endif %}
+                </form>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% if other_user_profile.user.username in request.user.profile.blocked_users %}
+                        <br><button name='block_or_unblock_user'>Unblock {{ other_user_profile.user.username }}</button>
+                    {% else %}
+                        <br><button name='block_or_unblock_user'>Block {{ other_user_profile.user.username }}</button>
+                    {% endif %}
+                </form>
+
+                {% if request.user.username in other_user_profile.current_connections %}
+                    <br><button onclick="loadEmailPage()">Email {{other_user_profile.user.first_name}}</button><br><br>
+                {% endif %}
+
+                <br><br>
+                {% if request.user.username in other_user_profile.current_connections %}
+                    {% if request.user.username not in other_user_profile.list_of_raters %}
+                        <!-- Rating another user -->
+                        <p>Rate {{ other_user_profile.user.first_name }} {{ other_user_profile.user.last_name }} as a connection.</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="rating">
+                                <label style="margin-right: 9px;">1</label>
+                                <input type="radio" name="star" id="1star" value="1">
+                                <input type="radio" name="star" id="2star" value="2">
+                                <input type="radio" name="star" id="3star" value="3">
+                                <input type="radio" name="star" id="5star" value="4">
+                                <input type="radio" name="star" id="4star" value="5">
+                                <label style="margin-left: 9px;">5</label>
+                            </div>
+                            <br><button name="rate_user">Rate {{other_user_profile.user.first_name}}</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <h3>This User has blocked you</h3>
+        <form method="post">
+            {% csrf_token %}
+            {% if other_user_profile.user.username in request.user.profile.blocked_users %}
+                <button name='block_or_unblock_user'>Would you like to Unblock {{ other_user_profile.user.username }}</button>
+            {% else %}
+                <button name='block_or_unblock_user'>Would you like to Block {{ other_user_profile.user.username }}</button>
+            {% endif %}
+        </form>
+    {% endif %}
+    <script>
+        function loadEmailPage() {
+            window.location.href = "{% url 'send-email' other_user_profile.user.username %}";
+        }
+    </script>
+{% endblock content %}

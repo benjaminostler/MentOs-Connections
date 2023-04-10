@@ -1,0 +1,31 @@
+{% extends "MentOS_app/base.html" %}
+
+{% block content %}
+    <h1>Edit Profile</h1> 
+    <img src="{{ request.user.profile.profile_img.url }}" alt="User Picture">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <fieldset>
+                {{ account_form.as_p }}
+            </fieldset>
+        </div>
+        <br>
+        <div>
+            <fieldset>
+                {{ profile_form.as_p }}
+            </fieldset>
+        </div>
+        <br><br>
+        <button type="submit">Update Profile</button>
+    </form>
+    <br>
+    <button onclick="linkToDeleteAccount()">Delete Your Account</button>
+
+    <script>
+        function linkToDeleteAccount() {
+            window.location.href = "{% url 'delete-account' %}";
+        }
+    </script>
+
+{% endblock content %}

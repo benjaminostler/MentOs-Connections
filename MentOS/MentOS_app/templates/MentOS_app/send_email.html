@@ -1,0 +1,45 @@
+{% extends "MentOS_app/base.html" %}
+
+{% block style %}
+<style>
+    #emailBodyId {
+        height: 20vh;
+        width: 40vw;
+    }
+    #emailSubjectId {
+        width: 40vw;
+    }
+    .content {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 20px;
+        background-color: #333;
+        border-radius: 10px;
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+<h1>Send an email to {{ other_user_profile.user.first_name }} {{ other_user_profile.user.last_name }}</h1>
+{% if request.user.username not in other_user_profile.blocked_users %}
+    {% if request.user.username in other_user_profile.current_connections %}
+        <div class="content">
+            <form method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="emailSubjectId">Subject</label><br>
+                    <input type="text" name="emailSubject" id="emailSubjectId"><br><br>
+                    <label for="emailBodyId">Body</label><br>
+                    <!-- <input type="text" name="emailBody" id="emailBodyId"><br><br> -->
+                    <textarea name="emailBody" id="emailBodyId" cols="30" rows="10"></textarea><br><br>
+                    <button>Send Email</button>
+                </div>
+            </form>
+        </div>
+    {% else %}
+    <h3>You are not connected with this user</h3>
+    {% endif %}
+{% else %}
+    <h3>This User has blocked you</h3>
+{% endif %}
+{% endblock content %}

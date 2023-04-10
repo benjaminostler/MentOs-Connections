@@ -1,0 +1,58 @@
+{% extends "MentOS_app/base.html" %}
+
+{% block content %}
+
+<!-- Current Connections -->
+<div id="currentConnectionsDiv">
+    <h3>Current Connections</h3> 
+    <table>
+        {% for i in current_connections %}
+        <tr>
+            <td>
+                <a id='linkToOtherProfile' href="{% url 'view-other-profiles' i.user.username %}">
+                    <img id='picIcon' src="{{i.profile_img.url }}" alt="User Icon">
+                    <br>
+                    {{i.user.username}}
+                </a>
+            </td>
+            <td>
+                <form method="post">
+                    {% csrf_token %}
+                        <button name="message" value={{i}}>Email</button>
+                        <button name="disconnect" value={{i}}>Disconnect</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<!-- Pending Connections -->
+<div id="pendingConnectionsDiv">
+    <h3>Pending Connections</h3> 
+    <table>
+        {% for i in pending_connections %}
+        <tr>
+            <td>
+                <a id='linkToOtherProfile' href="{% url 'view-other-profiles' i.user.username %}">
+                    <img id='picIcon' src="{{i.profile_img.url }}" alt="User Icon">
+                    <br>
+                    {{i.user.username}}
+                </a>
+            </td>
+            <td>
+                <form method="post">
+                    {% csrf_token %}
+                    {% if i.user.username in request.user.profile.pending_connections %}
+                        <button name='accept_connection' value={{i}}>Accept Connection</button>
+                        <button name='decline_connection' value={{i}}>Decline Connection</button>
+                    {% else %}
+                        <button name='cancel_request' value={{i}}>Cancel Request</button>
+                    {% endif %}
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

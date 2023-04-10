@@ -1,0 +1,151 @@
+body {
+	text-align: 		center;
+	font-family: 		sans-serif;
+	color: white;
+	background-image: url('../img/blue_bg_lg.jpg');
+}
+
+h2 {
+	font-family: 		monospace;
+}
+
+button {
+	font-size: 			1.5em;
+}
+
+table, th, td {
+	border: none;
+}
+
+th, td {
+	padding: 10px;
+	padding-right: 18px;
+}
+
+/* Hyperlink colors changed for better contrast on background image */
+form a {
+    color: orange;
+}
+body a {
+    color: orange;
+}
+
+/* Alignment of Form Fieldsets */
+fieldset {
+	text-align: justify;
+	padding-left: 35%;
+}
+
+/* Add a black background color to the top navigation */
+.topnavBar {
+	background-color: #333;
+	overflow: hidden;
+	width: 100%;
+  }
+
+/* Add a black background color to the top navigation */
+.topnav {
+	background-color: #333;
+	overflow: hidden;
+	width: auto;
+	float: left;
+  }
+  
+  /* Style the links inside the navigation bar */
+.topnav a {
+	float: left;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+.topnav a:hover {
+	background-color: #ddd;
+	color: black;
+}
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+	background-color: #04AA6D;
+	color: white;
+}
+
+.leftAlign {
+	text-align: left;
+}
+.rightAlign {
+	text-align: right;
+}
+.centerAlign {
+	text-align: center;
+}
+
+
+#currentConnectionsDiv {
+	float: left;
+	width: 33%;
+}
+
+#pendingConnectionsDiv {
+	float: left;
+	width: 33%;
+}
+
+#connectionRequestsDiv {
+	float: left;
+	width: 33%;
+}
+
+#suggestedConnectionsDiv {
+	width: 100%;
+}
+
+#mentosLogo {
+	  background-image: url('../img/mentos_logo.JPG');
+	  background-position-x: center;
+	  background-size: cover;
+	  background-repeat: no-repeat;
+	  height: 4em;
+	  padding-top: 2em;
+}
+
+#titleBar {
+	  margin-top: 0%;
+	  color:black;
+	  text-align: left;
+	  padding-left: 15%;
+	  margin-left: 20px;
+}
+
+#picIconCurrent {
+	height: 30px; 
+	width: auto;
+	border-radius: 50%;
+}
+
+#picIcon {
+	height: 50px; 
+	width: auto;
+	border-radius: 50%;
+}
+
+#current_user_header {
+	float: left;
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 5px 5px 5px 5px;
+	font-weight: bold;
+	background-image: url('../img/light_orange_bg.jpg');
+	width: auto;
+}
+
+#linkToOtherProfile {
+	text-decoration: none;
+	color: white;
+}
+
+

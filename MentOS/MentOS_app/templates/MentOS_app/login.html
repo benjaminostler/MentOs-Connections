@@ -1,0 +1,16 @@
+{% extends "MentOS_app/base_1.html" %}
+{% block content %}
+     <title>MentOS - Login</title>
+
+    <h1>Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            {{ form.as_p }}
+            <br>
+            <button type="submit">Login</button>
+        </fieldset>
+    </form>
+    <br><br>
+    <p>Don't have an account? Create one here: <a href="{% url 'create-account' %}">Create Account</a></p>
+{% endblock content %}
