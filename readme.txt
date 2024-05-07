@@ -13,10 +13,3 @@ pip install pillow
 
 # start the development Server
 python manage.py runserver
-
-
-
-## TODO:
- - Fix Logout page to actually work
- - make profile pictures actually show
- - figure out way to demo chat rooms
